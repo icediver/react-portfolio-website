@@ -3,9 +3,16 @@ import styled from 'styled-components';
 import play from '../assets/play.png';
 import pricing1 from '../assets/pricing1.png';
 import pricing2 from '../assets/pricing2.png';
+import  useScroll  from '../components/useScroll';
+import { motion } from 'framer-motion';
+import { pricingAnimations } from '../animation';
+
+
+
 
 
 const Pricing = () => {
+  const [element, controls] = useScroll();
   const plans = [
     {
       name: "Basic",
@@ -63,7 +70,7 @@ const Pricing = () => {
     },
   ];
   return (
-    <Section>
+    <Section ref={element}>
       <div className="background">
         <img src={pricing1} alt="Design" className='bg1'/>
         <img src={pricing2} alt="Design" className='bg2'/>
@@ -74,48 +81,52 @@ const Pricing = () => {
       </div>
       <div className="pricing">
         {
-          plans.map(({name, price}) => {
+          plans.map(({name, price}, index) => {
             return (
-              <div className='pricing__plan'>
+              <motion.div
+                className="pricing__plan"
+                key={index}
+                variants={pricingAnimations}
+                animate={controls}
+                transition={{ delay: 0.03, type: 'tween', duration: 0.8 }}>
                 <div className="pricing__plan_name">
                   <h2>{name}</h2>
                   <div className="pricing__plan_name_price">
                     <span>$</span>
                     <p>{price}</p>
-                    </div>
+                  </div>
                 </div>
-                    <div className="pricing__plan_content">
-                      <ul className={`pricing__plan_content_features ${name}`}>
-                        {data.map(({value, type}, index2) => {
-                          return (
-                            <Fragment key={index2}>
-                              {name === "Basic" ? (
-                                  type === name ? (
-                                    <li>{value}</li>
-                                  ) : (
-                                    <li className="line">{value}</li>
-                                  )
-                                ) : name === "Pro" ? (
-                                  type === "Basic" || type === name ? (
-                                    <li>{value}</li>
-                                  ) : (
-                                    <li className="line">{value}</li>
-                                  )
-                                ) : (
-                                  name === "Expert" && <li>{value}</li>
-                                )}
-                            </Fragment>
-                            
-                          )
-                        } )}
-                      </ul>
-                      <div className="pricing__plan_content_actions">
-                        <span>Order Now</span>
-                        <img src={play} alt="Order Now" /></div>
-                    </div>
+                <div className="pricing__plan_content">
+                  <ul className={`pricing__plan_content_features ${name}`}>
+                    {data.map(({ value, type }, index2) => {
+                      return (
+                        <Fragment key={index2}>
+                          {name === 'Basic' ? (
+                            type === name ? (
+                              <li>{value}</li>
+                            ) : (
+                              <li className="line">{value}</li>
+                            )
+                          ) : name === 'Pro' ? (
+                            type === 'Basic' || type === name ? (
+                              <li>{value}</li>
+                            ) : (
+                              <li className="line">{value}</li>
+                            )
+                          ) : (
+                            name === 'Expert' && <li>{value}</li>
+                          )}
+                        </Fragment>
+                      );
+                    })}
+                  </ul>
+                  <div className="pricing__plan_content_actions">
+                    <span>Order Now</span>
+                    <img src={play} alt="Order Now" />
+                  </div>
                 </div>
-              
-            )
+              </motion.div>
+            );
           })
         }
       </div>

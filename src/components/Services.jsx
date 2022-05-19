@@ -5,8 +5,12 @@ import service2 from '../assets/service2.png';
 import service3 from '../assets/service3.png';
 import play from '../assets/play.png';
 import Title from './Title';
+import  useScroll  from '../components/useScroll';
+import { motion } from 'framer-motion';
+import { servicesAnimations } from '../animation';
 
 const Services = () => {
+  const [element, controls] = useScroll();
   const data = [
     {
       type: "Design",
@@ -25,13 +29,22 @@ const Services = () => {
     },
   ]
   return (
-    <Section id='services'>
+    <Section id='services' ref={element}>``
       <Title value='services'/>
       <div className="services">
         {
           data.map(({type, text, image}, index) => {
             return (
-              <div className="services__service">
+              <motion.div
+                className="services__service"
+                key={type}
+                variants={servicesAnimations}
+                animate={controls}
+                transition={{
+                  delay: 0.03,
+                  type: 'tween',
+                  duration: 0.8,
+                }}>
                 <div className="services__service_image">
                   <img src={image} alt="service" />
                 </div>
@@ -40,9 +53,9 @@ const Services = () => {
                   <h2>{type}</h2>
                 </div>
                 <p className="services__service_description">{text}</p>
-                <img src={play} alt='Play'/>
-              </div>
-            )
+                <img src={play} alt="Play" />
+              </motion.div>
+            );
           })
         }
       </div>

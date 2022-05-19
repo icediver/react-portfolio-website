@@ -3,8 +3,12 @@ import placeholder from '../assets/placeholder.png';
 import play from '../assets/play.png';
 import styled from 'styled-components';
 import Title from './Title';
+import  useScroll  from '../components/useScroll';
+import { motion } from 'framer-motion';
+import { blogsAnimations } from '../animation';
 
 const Blog = () => {
+  const [element, controls] = useScroll();
   const blogsData = [
     {
       title: "Summer trip to mountains",
@@ -26,35 +30,38 @@ const Blog = () => {
     },
   ];
   return (
-    <Section id='blog'>
-      <Title value='Blog'/>
+    <Section id="blog" ref={element}>
+      <Title value="Blog" />
       <div className="decoration"></div>
       <div className="blogs">
-        {
-          blogsData.map(({title, type, description}) => {
-            return (
-              <div className="blog">
-                <div className="image">
-                  <img src={placeholder} alt="Placeholder" />
-                </div>
-                <div className="title">
-                  <h3>{title}</h3>
-                </div>
-                <span className='type'>{type}</span>
-                <div className="description">
-                  <p>{description}</p>
-                </div>
-                <div className="more">
-                  <img src={play} alt="play" />
-                  <span>Read More</span>
-                  </div>
+        {blogsData.map(({ title, type, description }) => {
+          return (
+            <motion.div
+              className="blog"
+              key={title}
+              variants={blogsAnimations}
+              animate={controls}
+              transition={{ delay: 0.03, type: 'tween', duration: 0.8 }}>
+              <div className="image">
+                <img src={placeholder} alt="Placeholder" />
               </div>
-            )
-          })
-        }
+              <div className="title">
+                <h3>{title}</h3>
+              </div>
+              <span className="type">{type}</span>
+              <div className="description">
+                <p>{description}</p>
+              </div>
+              <div className="more">
+                <img src={play} alt="play" />
+                <span>Read More</span>
+              </div>
+            </motion.div>
+          );
+        })}
       </div>
     </Section>
-  )
+  );
 }
 
 export default Blog;

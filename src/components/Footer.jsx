@@ -1,26 +1,41 @@
 import React from 'react';
 import styled from "styled-components";
 import { BsBehance, BsFacebook, BsTwitter, BsYoutube } from "react-icons/bs";
+import useScroll from './useScroll';
+import { motion } from 'framer-motion';
+import { footerLogoAnimations, footerTextAnimations } from '../animation';
+
 
 const Footer = () => {
+  const [element, controls] = useScroll();
   return (
-    <Foot>
-      <span>
-        &copy; Template created with love by Kishan Sheth
-      </span>
-      <div className="footer__social__icons">
+    <Foot
+      ref={element}
+      variants={footerTextAnimations}
+      animate={controls}
+      transition={{ delay: 0.03, type: 'tween', duration: 0.8 }}>
+      <span>&copy; Template created with love by Kishan Sheth</span>
+      <motion.div
+        className="footer__social__icons"
+        animate={controls}
+        variants={footerLogoAnimations}
+        transition={{
+          delay: 0.02,
+          type: 'tween',
+          duration: 0.8,
+        }}>
         <BsBehance />
         <BsTwitter />
         <BsFacebook />
         <BsYoutube />
-      </div>
+      </motion.div>
     </Foot>
-  )
+  );
 }
 
 export default Footer;
 
-const Foot = styled.footer`
+const Foot = styled(motion.footer)`
   background-color: var(--primary-color);
   color: white;
   display: flex;

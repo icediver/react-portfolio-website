@@ -5,54 +5,94 @@ import loadmore from '../assets/loadmore.png';
 import portfolio1 from '../assets/portfolio1.png';
 import portfolio2 from '../assets/portfolio2.png';
 import Title from './Title';
+import  useScroll  from '../components/useScroll';
+import { motion } from 'framer-motion';
+import { portfolioAnimations } from '../animation';
 
 const Portfolilo = () => {
+  const [element, controls] = useScroll();
   return (
-    <Section id='portfolio'>
-      <Title value="Portfolio"/>
+    <Section id="portfolio" ref={element}>
+      <Title value="Portfolio" />
       <div className="background">
-        <img src={portfolio1} alt="Design" className='design1'/>
-        <img src={portfolio2} alt="Design" className='design2'/>
+        <img src={portfolio1} alt="Design" className="design1" />
+        <img src={portfolio2} alt="Design" className="design2" />
       </div>
       <div className="portfolio__title">
         <p>Our Works</p>
         <h2>Check our super awesome portfolio</h2>
       </div>
       <div className="grid">
-        <div className="child-one grid-box">
+        <motion.div
+          variants={portfolioAnimations}
+          animate={controls}
+          transition={{ delay: 0.3, type: 'tween', duration: 0.8 }}
+          className="child-one grid-box">
           <img src={placeholder} alt="placeholder" />
-        </div>
-        <div className="child-two grid-box">
+        </motion.div>
+        <motion.div
+          variants={portfolioAnimations}
+          animate={controls}
+          transition={{ delay: 0.3, type: 'tween', duration: 0.8 }}
+          className="child-two grid-box">
           <img src={placeholder} alt="placeholder" />
-        </div>
-        <div className="child-two grid-box">
+        </motion.div>
+        <motion.div
+          variants={portfolioAnimations}
+          animate={controls}
+          transition={{ delay: 0.3, type: 'tween', duration: 0.8 }}
+          className="child-two grid-box">
           <img src={placeholder} alt="placeholder" />
-        </div>
-        <div className="child-three grid-box">
+        </motion.div>
+        <motion.div
+          variants={portfolioAnimations}
+          animate={controls}
+          transition={{ delay: 0.3, type: 'tween', duration: 0.8 }}
+          className="child-three grid-box">
           <img src={placeholder} alt="placeholder" />
-        </div>
-        <div className="child-four grid-box">
+        </motion.div>
+        <motion.div
+          variants={portfolioAnimations}
+          animate={controls}
+          transition={{ delay: 0.3, type: 'tween', duration: 0.8 }}
+          className="child-four grid-box">
           <img src={placeholder} alt="placeholder" />
-        </div>
-        <div className="child-five grid-box">
+        </motion.div>
+        <motion.div
+          variants={portfolioAnimations}
+          animate={controls}
+          transition={{ delay: 0.3, type: 'tween', duration: 0.8 }}
+          className="child-five grid-box">
           <img src={placeholder} alt="placeholder" />
-        </div>
-        <div className="child-six grid-box">
+        </motion.div>
+        <motion.div
+          variants={portfolioAnimations}
+          animate={controls}
+          transition={{ delay: 0.3, type: 'tween', duration: 0.8 }}
+          className="child-six grid-box">
           <img src={placeholder} alt="placeholder" />
-        </div>
-        <div className="child-seven grid-box">
+        </motion.div>
+        <motion.div
+          variants={portfolioAnimations}
+          animate={controls}
+          transition={{ delay: 0.3, type: 'tween', duration: 0.8 }}
+          className="child-seven grid-box">
           <img src={placeholder} alt="placeholder" />
-        </div>
-        <div className="child-eight grid-box">
+        </motion.div>
+        <motion.div
+          variants={portfolioAnimations}
+          animate={controls}
+          transition={{ delay: 0.3, type: 'tween', duration: 0.8 }}
+          className="child-eight grid-box">
           <img src={placeholder} alt="placeholder" />
-        </div>
+        </motion.div>
       </div>
       <div className="portfolio-more">
         <span>LoadMore</span>
         <img src={loadmore} alt="Load More" />
       </div>
     </Section>
-  )
+  );
 }
 
 export default Portfolilo;
