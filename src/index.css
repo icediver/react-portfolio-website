@@ -14,7 +14,7 @@
 html {
   scroll-behavior: smooth;
   height: 100%;
-  /* overflow-x: hidden; */
+  overflow-x: initial;
 
 }
 @media screen and (min-width: 280px) and(max-width: 1080px){

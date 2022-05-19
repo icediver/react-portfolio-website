@@ -1,28 +1,43 @@
-import React, { useState } from 'react';
-import styled from 'styled-components';
-import logo from '../assets/logo.png';
-import { GiHamburgerMenu } from 'react-icons/gi';
-import { MdClose } from 'react-icons/md';
-import  useScroll  from '../components/useScroll';
-import { motion } from 'framer-motion';
-import { navAnimations } from '../animation';
+import React, { useState } from "react";
+import styled from "styled-components";
+import logo from "../assets/logo.png";
+import { GiHamburgerMenu } from "react-icons/gi";
+import { MdClose } from "react-icons/md";
+import { motion } from "framer-motion";
+import useScroll from "./useScroll";
+import { navAnimations } from "../animation";
 
-const Navbar = () => {
+export default function Navbar() {
   const [isNavOpen, setIsNavOpen] = useState(false);
-  const[element, controls] = useScroll();
+  const [element, controls] = useScroll();
+  const html = document.querySelector("html");
+  html.addEventListener("click", (e) => setIsNavOpen(false));
   return (
-    <Nav ref={element}
+    <Nav
+      state={isNavOpen ? 1 : 0}
       variants={navAnimations}
-      transition={{delay:0.1}}
+      transition={{ delay: 0.1 }}
+      ref={element}
       animate={controls}
     >
-      <div className='brand_container'>
-        <a href='#' className='brand'>
-          <img src={logo} alt='logo'/>
-        </a>  
-        <div className='toggle'></div>
-      </div>  
-      <div className="links">
+      <div className="brand__container">
+        <a href="#" className="brand">
+          <img src={logo} alt="Logo" />
+        </a>
+        <div className="toggle">
+          {isNavOpen ? (
+            <MdClose onClick={() => setIsNavOpen(false)} />
+          ) : (
+            <GiHamburgerMenu
+              onClick={(e) => {
+                e.stopPropagation();
+                setIsNavOpen(true);
+              }}
+            />
+          )}
+        </div>
+      </div>
+      <div className={`links ${isNavOpen ? "show" : ""}`}>
         <ul>
           <li className="active">
             <a href="#home">Home</a>
@@ -31,7 +46,7 @@ const Navbar = () => {
             <a href="#services">Services</a>
           </li>
           <li>
-            <a href="#portfolio">Портфолио</a>
+            <a href="#portfolio">Portfolio</a>
           </li>
           <li>
             <a href="#blog">Blog</a>
@@ -45,39 +60,80 @@ const Navbar = () => {
         </ul>
       </div>
     </Nav>
-  )
+  );
 }
-
-export default Navbar;
 
 const Nav = styled(motion.nav)`
   display: flex;
   justify-content: space-between;
   margin: 0 12rem;
-  color: #fff;
+  padding-top: 2rem;
+  color: white;
   .brand__container {
-    margin: 0 2 rem;
+    margin: 0 2rem;
+    .brand {
+    }
     .toggle {
       display: none;
     }
   }
   .links {
     ul {
-      list-style-type: none;
-      display: flex;
-      gap: 3rem;
       .active {
         a {
           border-bottom: 0.2rem solid var(--secondary-color);
         }
       }
+      list-style: none;
+      display: flex;
+      gap: 3rem;
       li {
         a {
-          color: #fff;
+          color: white;
           text-decoration: none;
           font-weight: bold;
           font-size: 1.1rem;
         }
+      }
+    }
+  }
+  @media screen and (min-width: 280px) and (max-width: 1080px) {
+    margin: 0;
+    position: relative;
+    .brand__container {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      width: 100%;
+      .brand {
+      }
+      .toggle {
+        padding-right: 1rem;
+        display: block;
+        z-index: 1;
+      }
+    }
+    .show {
+      opacity: 1 !important;
+      visibility: visible !important;
+    }
+
+    .links {
+      position: absolute;
+      overflow-x: hidden;
+      top: 0;
+      right: 0;
+      width: ${({ state }) => (state ? "60%" : "0%")};
+      height: 100vh;
+      background-color: var(--secondary-color);
+      opacity: 0;
+      visibility: hidden;
+      transition: 0.4s ease-in-out;
+      ul {
+        flex-direction: column;
+        text-align: center;
+        height: 100%;
+        justify-content: center;
       }
     }
   }
